@@ -13,34 +13,27 @@ public class UITradingMarche : MonoBehaviour
     public Graph3D graphique;
 
     [Header("Composants UI")]
-    public TextMeshProUGUI textePrixActuel;
-    public TMP_InputField champQuantite;
-    public Button boutonAcheter;
-    public Button boutonVendre;
+    public TextMeshPro textePrixActuel;
+    public TextMeshPro champQuantite;
+    private int quantite = 1;
+
 
     void Update()
     {
-        // Protège contre les exceptions si l’objet est détruit à runtime
         if (graphique == null || joueur == null) return;
 
         try
         {
-            // --- Affichage dynamique du prix actuel ---
+            // Prix
             if (textePrixActuel != null && !textePrixActuel.IsDestroyed())
             {
                 textePrixActuel.text = $"Prix actuel : {graphique.prixActuel:F2}$";
             }
 
-            // --- Interaction du bouton "Acheter" ---
-            if (boutonAcheter != null && champQuantite != null && !champQuantite.IsDestroyed())
+            // Quantité (à afficher chaque frame pour garantir la synchro)
+            if (champQuantite != null && !champQuantite.IsDestroyed())
             {
-                boutonAcheter.interactable = joueur.PeutAcheter(graphique.prixActuel, GetQuantite());
-            }
-
-            // --- Interaction du bouton "Vendre" ---
-            if (boutonVendre != null)
-            {
-                boutonVendre.interactable = joueur.PeutVendre(nomMarche);
+                champQuantite.text = quantite.ToString();
             }
         }
         catch (MissingReferenceException e)
@@ -49,26 +42,47 @@ public class UITradingMarche : MonoBehaviour
         }
     }
 
+
     int GetQuantite()
     {
-        if (champQuantite == null || champQuantite.text == "") return 0;
-        if (int.TryParse(champQuantite.text, out int quantite))
-            return Mathf.Max(quantite, 1);
-        return 0;
+        return Mathf.Max(quantite, 1);
     }
 
     public void ActionAcheter()
     {
         if (joueur == null || graphique == null) return;
-        int quantite = GetQuantite();
-        float prix = graphique.prixActuel;
-        joueur.Acheter(nomMarche, prix, quantite);
+        joueur.Acheter(nomMarche, graphique.prixActuel, GetQuantite());
     }
 
     public void ActionVendre()
     {
         if (joueur == null || graphique == null) return;
-        float prix = graphique.prixActuel;
-        joueur.VendreTout(nomMarche, prix);
+        joueur.VendreTout(nomMarche, graphique.prixActuel);
+    }
+
+    public void AugmenterQuantite()
+    {
+        quantite++;
+        UpdateChampQuantite();
+    }
+
+    public void DiminuerQuantite()
+    {
+        quantite = Mathf.Max(1, quantite - 1);
+        UpdateChampQuantite();
+    }
+
+    private void UpdateChampQuantite()
+    {
+        Debug.Log("[UITradingMarche] Mise à jour quantité affichée : " + quantite);
+
+        if (champQuantite != null)
+        {
+            champQuantite.text = quantite.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("[UITradingMarche] champQuantite n'est pas assigné !");
+        }
     }
 }
