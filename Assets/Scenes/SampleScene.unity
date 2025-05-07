@@ -14919,6 +14919,16 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.08462605, y: -0.018837288, z: 0.013709333}
     m_Extent: {x: 0.10698363, y: 0.05242701, z: 0.07775}
   m_DirtyAABB: 0
+--- !u!1 &730559751 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5103964331541282483, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+  m_PrefabInstance: {fileID: 5937777104308032359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &730559753 stripped
+Animation:
+  m_CorrespondingSourceObject: {fileID: 3320155352907048568, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+  m_PrefabInstance: {fileID: 5937777104308032359}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &733307865
 GameObject:
   m_ObjectHideFlags: 0
@@ -29555,6 +29565,32 @@ MonoBehaviour:
   _disablePitchFromSource: 1
   _disableYawFromSource: 1
   _disableRollFromSource: 1
+--- !u!1 &1424076106 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 269941841820931084, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+  m_PrefabInstance: {fileID: 5937777104308032359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1424076108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424076106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7b6e312a7f6b5942be2ba3d1491c383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newsText: {fileID: 2041333659}
+  news:
+  - "L'\xE9conomie mondiale conna\xEEt une forte croissance !"
+  - La bourse subit une baisse importante des actions.
+  - Une nouvelle fusion d'entreprises promet de nouveaux horizons.
+  - "Les taux d'int\xE9r\xEAt augmentent, un impact n\xE9gatif pour les investisseurs."
+  warningAnimation: {fileID: 730559753}
+  lumiereAlarmeRougeGameObject: {fileID: 730559751}
+  vitesseDApparition: 3
 --- !u!1 &1434239623
 GameObject:
   m_ObjectHideFlags: 0
@@ -40081,6 +40117,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1202026386}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2041333659 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5929222854943066837, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+  m_PrefabInstance: {fileID: 5937777104308032359}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2046230951
 GameObject:
   m_ObjectHideFlags: 0
@@ -42214,17 +42261,53 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3320155352907048568, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 384aad4aea0d58544ba10fb1bb6b233b, type: 2}
+    - target: {fileID: 3320155352907048568, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+      propertyPath: m_PlayAutomatically
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4063584446374358013, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103964331541282483, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810043256612402271, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+      propertyPath: warningAnimation
+      value: 
+      objectReference: {fileID: 730559753}
+    - target: {fileID: 5810043256612402271, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+      propertyPath: lumiereAlarmeRougeGameObject
+      value: 
+      objectReference: {fileID: 7206608792625436534, guid: 05fd4e212ee37124881f2f2efb5dd704, type: 3}
+    - target: {fileID: 5929222854943066837, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+      propertyPath: m_fontSize
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929222854943066837, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 6695401350513323377, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
       propertyPath: m_Name
       value: TerrainJeu
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5810043256612402271, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6695401350513323377, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 209409249}
+    - targetCorrespondingSourceObject: {fileID: 269941841820931084, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1424076108}
     - targetCorrespondingSourceObject: {fileID: 6429920083529986433, guid: 5b64e13687c71824da398b607bbd93d7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}

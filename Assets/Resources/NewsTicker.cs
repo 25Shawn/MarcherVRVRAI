@@ -26,7 +26,7 @@ public class Nouvelles : MonoBehaviour
     /// </summary>
     void Start()
     {
-        lumiereAlarmeRougeGameObject.SetActive(false);
+        lumiereAlarmeRougeGameObject.gameObject.SetActive(false);
         StartCoroutine(AffichageNouvellesBoucle());
     }
 
@@ -82,12 +82,13 @@ public class Nouvelles : MonoBehaviour
                 if (activateRedLight)
                 {
                     warningAnimation.Play();
-                    lumiereAlarmeRougeGameObject.SetActive(true);
+                    lumiereAlarmeRougeGameObject.gameObject.SetActive(true);
                    
                 }
                 else
                 {
-                    lumiereAlarmeRougeGameObject.SetActive(false);
+                    warningAnimation.Stop();
+                    lumiereAlarmeRougeGameObject.gameObject.SetActive(false);
                     
                 }
             }
