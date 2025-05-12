@@ -18,6 +18,20 @@ public class UITradingMarche : MonoBehaviour
     public TextMeshPro texteArgentRestant;
     private int quantite = 1;
 
+    [Header("Effets sonores")]
+    public AudioClip sonAchat;
+    public AudioClip sonVente;
+    private AudioSource audioSource;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
     void Update()
     {
         if (graphique == null || joueur == null) return;
@@ -33,7 +47,7 @@ public class UITradingMarche : MonoBehaviour
             // --- Affichage de la quantité ---
             if (champQuantite != null && !champQuantite.IsDestroyed())
             {
-                champQuantite.text = quantite.ToString();
+                champQuantite.text = $"Qtt : {quantite.ToString()}";
             }
 
             // --- Affichage de l'argent ---
@@ -85,12 +99,22 @@ public class UITradingMarche : MonoBehaviour
     {
         if (joueur == null || graphique == null) return;
         joueur.Acheter(nomMarche, graphique.prixActuel, GetQuantite());
+        if (sonAchat != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(sonAchat);
+        }
     }
 
     public void ActionVendre()
     {
         if (joueur == null || graphique == null) return;
         joueur.VendreTout(nomMarche, graphique.prixActuel);
+
+        if (sonAchat != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(sonVente);
+        }
+
     }
 
     public void AugmenterQuantite()

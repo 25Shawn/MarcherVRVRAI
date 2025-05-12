@@ -140,5 +140,11 @@ public class JoueurTradingControleur : MonoBehaviour
     {
         float perte = perteParSeconde * Time.deltaTime;
         argentActuel = Mathf.Max(0f, argentActuel - perte);
+        if(argentActuel <= 0)
+        {
+            ScriptGestionGameOver.estEnGameOver = true;
+        }
+       
+        
     }
 }
