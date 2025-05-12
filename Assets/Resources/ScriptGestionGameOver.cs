@@ -2,24 +2,26 @@ using UnityEngine;
 
 public class ScriptGestionGameOver : MonoBehaviour
 {
-
-
     public GameObject GameOver;
+
+    public static bool estEnGameOver = false;
+
     void Start()
     {
-        GameOver.gameObject.SetActive(false);
+        GameOver.SetActive(true);
+        estEnGameOver = false;
     }
 
-
-    public bool ArretDuJeu(GameObject gameObject)
+    void Update()
     {
-        if (gameObject.gameObject.activeInHierarchy)
+        
+        if (GameOver.activeInHierarchy)
         {
-            return true;
+            estEnGameOver = true;
         }
         else
         {
-            return false;
+            estEnGameOver = false;
         }
     }
 }

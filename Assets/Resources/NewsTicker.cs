@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
@@ -33,17 +32,19 @@ public class Nouvelles : MonoBehaviour
     /// <summary>
     /// Méthode qui affiche au 3 secondes une nouvelle nouvelle.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>le delais en seconde</returns>
     IEnumerator AffichageNouvellesBoucle()
     {
+
         while (true)
         {
-            // Mettre à jour le texte
+            
             newsText.text = news[currentIndex];
             MiseAjourNouvelle();
 
-            // Attendre quelques secondes avant de passer à la suivante
+            
             yield return new WaitForSeconds(vitesseDApparition);
+
 
             // Passer à la prochaine nouvelle
             currentIndex = (currentIndex + 1) % news.Length;
@@ -58,6 +59,8 @@ public class Nouvelles : MonoBehaviour
     /// </summary>
     void MiseAjourNouvelle()
     {
+        if (ScriptGestionGameOver.estEnGameOver) return;
+
         // utilisation de chatGBT pour cette ligne de code
         // Cela fait que si la nouvelle a la position currentIndex contient le mot croissance ou fusion on lui assigne un true, sinon c'est false.
         bool isGoodNews = news[currentIndex].Contains("croissance") || news[currentIndex].Contains("fusion");
