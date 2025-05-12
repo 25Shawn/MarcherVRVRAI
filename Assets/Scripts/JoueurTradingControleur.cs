@@ -7,6 +7,9 @@ public class JoueurTradingControleur : MonoBehaviour
     public float argentInitial = 1000f;
     public float argentActuel;
 
+    [Header("Perte automatique")]
+    public float perteParSeconde = 1f;
+
     // Structure pour représenter un achat en cours
     [System.Serializable]
     public class Achat
@@ -54,6 +57,11 @@ public class JoueurTradingControleur : MonoBehaviour
     void Start()
     {
         argentActuel = argentInitial;
+    }
+
+    private void Update()
+    {
+        AppliquerPertePassive();
     }
 
     /// <summary>
@@ -126,5 +134,11 @@ public class JoueurTradingControleur : MonoBehaviour
     public bool PeutVendre(string nomMarche)
     {
         return portefeuille.ContainsKey(nomMarche) && portefeuille[nomMarche].Count > 0;
+    }
+
+    private void AppliquerPertePassive()
+    {
+        float perte = perteParSeconde * Time.deltaTime;
+        argentActuel = Mathf.Max(0f, argentActuel - perte);
     }
 }
