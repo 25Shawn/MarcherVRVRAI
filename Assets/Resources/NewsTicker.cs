@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
-public class NewsTicker : MonoBehaviour
+/// <summary>
+/// Classe qui fait la gestion du changement de nouvelles
+/// </summary>
+public class Nouvelles : MonoBehaviour
 {
     public TextMeshPro newsText;
     public string[] news = {
@@ -18,32 +20,49 @@ public class NewsTicker : MonoBehaviour
     public GameObject lumiereAlarmeRougeGameObject;
     public float vitesseDApparition = 3f;
 
+    /// <summary>
+    /// Méthode de commencement qui met la lumière rouge inactive et par la coroutine pour afficher les nouvelles en les défilants
+    /// </summary>
     void Start()
     {
-        lumiereAlarmeRougeGameObject.SetActive(false);
-        StartCoroutine(ShowNewsLoop());
+        lumiereAlarmeRougeGameObject.gameObject.SetActive(false);
+        StartCoroutine(AffichageNouvellesBoucle());
     }
 
-    IEnumerator ShowNewsLoop()
+    /// <summary>
+    /// Méthode qui affiche au 3 secondes une nouvelle nouvelle.
+    /// </summary>
+    /// <returns>le delais en seconde</returns>
+    IEnumerator AffichageNouvellesBoucle()
     {
+
         while (true)
         {
-            // Mettre à jour le texte
+
             newsText.text = news[currentIndex];
-            UpdateNewsText();
+            MiseAjourNouvelle();
 
-            Debug.Log(news[currentIndex]);
 
-            // Attendre quelques secondes avant de passer à la suivante
             yield return new WaitForSeconds(vitesseDApparition);
+
 
             // Passer à la prochaine nouvelle
             currentIndex = (currentIndex + 1) % news.Length;
         }
     }
 
-    void UpdateNewsText()
+    /// <summary>
+    /// Méthode qui fait la gestion du retour de valeur 
+    /// Donc,si la nouvelle est bonne on lui retourne une valeur de 5 a 11
+    /// si la novuelle est mauvaise on lui retroune une valeur entre 1 et 5
+    /// et si la valeur est 1 ou 2 la lumiere rouge s'allume.
+    /// </summary>
+    void MiseAjourNouvelle()
     {
+        if (ScriptGestionGameOver.estEnGameOver) return;
+
+        // utilisation de chatGBT pour cette ligne de code
+        // Cela fait que si la nouvelle a la position currentIndex contient le mot croissance ou fusion on lui assigne un true, sinon c'est false.
         bool isGoodNews = news[currentIndex].Contains("croissance") || news[currentIndex].Contains("fusion");
 
         if (isGoodNews)
@@ -51,13 +70,13 @@ public class NewsTicker : MonoBehaviour
             newsText.color = Color.green;
             int randomValue = Random.Range(5, 11);
             lumiereAlarmeRougeGameObject.gameObject.SetActive(false);
-            Debug.Log("Bonne nouvelle! Valeur random: " + randomValue);
+
         }
         else
         {
             newsText.color = Color.red;
             int randomValue = Random.Range(1, 5);
-            Debug.Log("Mauvaise nouvelle! Valeur random: " + randomValue);
+
 
             bool activateRedLight = (randomValue == 1 || randomValue == 2);
 
@@ -66,13 +85,14 @@ public class NewsTicker : MonoBehaviour
                 if (activateRedLight)
                 {
                     warningAnimation.Play();
-                    lumiereAlarmeRougeGameObject.SetActive(true);
-                    Debug.Log("Alerte! Animation de lumière rouge activée !");
+                    lumiereAlarmeRougeGameObject.gameObject.SetActive(true);
+
                 }
                 else
                 {
-                    lumiereAlarmeRougeGameObject.SetActive(false);
-                    Debug.Log("Pas d'alerte, disparition de la lumière rouge.");
+                    warningAnimation.Stop();
+                    lumiereAlarmeRougeGameObject.gameObject.SetActive(false);
+
                 }
             }
         }

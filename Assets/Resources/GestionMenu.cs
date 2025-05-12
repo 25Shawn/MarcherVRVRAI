@@ -2,19 +2,25 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Classe qui fait la gestion des boutons de menu 
+/// </summary>
 public class MainMenuVR : MonoBehaviour
 {
+    /// <summary>
+    /// Méthode qui fait charger la scene de jeu
+    /// </summary>
     public void CommencerJeu()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("SalleDeMarche");
     }
 
+    /// <summary>
+    /// Méthode qui quitte le jeu
+    /// </summary>
     public void QuitterJeu()
     {
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false; // Arrête le mode Play dans l'éditeur
-#else
-        Application.Quit(); // Ferme dans un vrai jeu (build)
-#endif
+
+        EditorApplication.isPlaying = false;
     }
 }
