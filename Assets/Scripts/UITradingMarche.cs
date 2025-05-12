@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Gère l'interface d'achat/vente pour un marché.
@@ -15,8 +15,8 @@ public class UITradingMarche : MonoBehaviour
     [Header("Composants UI")]
     public TextMeshPro textePrixActuel;
     public TextMeshPro champQuantite;
+    public TextMeshPro texteArgentRestant;
     private int quantite = 1;
-
 
     void Update()
     {
@@ -24,16 +24,50 @@ public class UITradingMarche : MonoBehaviour
 
         try
         {
-            // Prix
+            // --- Affichage du prix actuel ---
             if (textePrixActuel != null && !textePrixActuel.IsDestroyed())
             {
                 textePrixActuel.text = $"Prix actuel : {graphique.prixActuel:F2}$";
             }
 
-            // Quantité (à afficher chaque frame pour garantir la synchro)
+            // --- Affichage de la quantité ---
             if (champQuantite != null && !champQuantite.IsDestroyed())
             {
                 champQuantite.text = quantite.ToString();
+            }
+
+            // --- Affichage de l'argent ---
+            if (texteArgentRestant != null && !texteArgentRestant.IsDestroyed())
+            {
+                texteArgentRestant.text = $"Argent : {joueur.argentActuel:F2}$";
+            }
+
+            // --- Contrôles clavier (Input System) ---
+            var keyboard = Keyboard.current;
+            if (keyboard == null) return;
+
+            if (keyboard.aKey.wasPressedThisFrame)
+            {
+                ActionAcheter();
+                Debug.Log(">>> Achat déclenché par touche A");
+            }
+
+            if (keyboard.vKey.wasPressedThisFrame)
+            {
+                ActionVendre();
+                Debug.Log(">>> Vente déclenchée par touche V");
+            }
+
+            if (keyboard.pKey.wasPressedThisFrame)
+            {
+                AugmenterQuantite();
+                Debug.Log(">>> Quantité augmentée (P)");
+            }
+
+            if (keyboard.mKey.wasPressedThisFrame)
+            {
+                DiminuerQuantite();
+                Debug.Log(">>> Quantité diminuée (M)");
             }
         }
         catch (MissingReferenceException e)
@@ -41,7 +75,6 @@ public class UITradingMarche : MonoBehaviour
             Debug.LogWarning($"[UITradingMarche - {nomMarche}] Référence détruite : {e.Message}");
         }
     }
-
 
     int GetQuantite()
     {

@@ -7,7 +7,7 @@ public class JoueurTradingControleur : MonoBehaviour
     public float argentInitial = 1000f;
     public float argentActuel;
 
-    // Structure pour représenter un achat
+    // Structure pour représenter un achat en cours
     [System.Serializable]
     public class Achat
     {
@@ -21,8 +21,35 @@ public class JoueurTradingControleur : MonoBehaviour
         }
     }
 
-    // Portefeuille : marché → liste d’achats
+    // Structure pour représenter une transaction (historique)
+    [System.Serializable]
+    public class Transaction
+    {
+        public enum Type { Achat, Vente }
+
+        public Type type;
+        public string marche;
+        public float prix;
+        public int quantite;
+        public float montantTotal;
+        public float profit;
+
+        public Transaction(Type type, string marche, float prix, int quantite, float profit = 0f)
+        {
+            this.type = type;
+            this.marche = marche;
+            this.prix = prix;
+            this.quantite = quantite;
+            this.montantTotal = prix * quantite;
+            this.profit = profit;
+        }
+    }
+
+    // Portefeuille : marché → liste d’achats en cours
     private Dictionary<string, List<Achat>> portefeuille = new Dictionary<string, List<Achat>>();
+
+    // Historique complet des transactions
+    public List<Transaction> historiqueTransactions = new List<Transaction>();
 
     void Start()
     {
@@ -49,6 +76,9 @@ public class JoueurTradingControleur : MonoBehaviour
         }
 
         portefeuille[nomMarche].Add(new Achat(prixUnitaire, quantite));
+
+        // Enregistrer dans l'historique
+        historiqueTransactions.Add(new Transaction(Transaction.Type.Achat, nomMarche, prixUnitaire, quantite));
 
         Debug.Log($"Achat de {quantite} unités sur {nomMarche} à {prixUnitaire:F2}$ - Total dépensé : {coutTotal:F2}$ - Solde : {argentActuel:F2}$");
         return true;
@@ -80,6 +110,9 @@ public class JoueurTradingControleur : MonoBehaviour
         argentActuel += gainTotal;
 
         portefeuille[nomMarche].Clear(); // vide les actifs du marché
+
+        // Enregistrer dans l'historique
+        historiqueTransactions.Add(new Transaction(Transaction.Type.Vente, nomMarche, prixVente, totalQuantite, profit));
 
         Debug.Log($"Vente de {totalQuantite} unités sur {nomMarche} à {prixVente:F2}$ - Gain : {gainTotal:F2}$ - Profit net : {profit:F2}$ - Solde : {argentActuel:F2}$");
         return true;
